@@ -21,9 +21,9 @@ module.exports = {
       });
     }
 
-    const projects = await Task.find({ projectId });
+    const tasks = await Task.find({ projectId });
 
-    return res.json(projects);
+    return res.json(tasks);
   },
 
   async create(req, res) {
@@ -48,7 +48,9 @@ module.exports = {
 
     const task = await Task.create({ name, projectId: projectId });
 
-    return res.status(201).json(task);
+    return res
+      .status(201)
+      .json({ status: 201, message: "Task created successfully", task });
   },
 
   async deleteItem(req, res) {
@@ -69,9 +71,11 @@ module.exports = {
         message: `User can not delete tasks of the the List ${projectId}`,
       });
     }
-
-    const deletedTask = await Task.deleteOne({ _id: taskId });
-    return res.json(deletedTask);
+    const deletedTask = await Task.findById(taskId);
+    await Task.deleteOne({ _id: taskId });
+    return res
+      .status(200)
+      .json({ status: 200, message: "Task deleted successfully", deletedTask });
   },
 
   async editItem(req, res) {
@@ -93,11 +97,15 @@ module.exports = {
       });
     }
 
-    const newTask = await Task.updateOne({ _id: taskId }, req.body);
-    return res.json(newTask);
+    await Task.updateOne({ _id: taskId }, req.body);
+    const newTask = await Task.findById(taskId);
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "Task edited successfully", newTask });
   },
 
-  async checkItem(req, res) {
+  async finishItem(req, res) {
     const { id: projectId, taskId } = req.params;
     const { id: userId } = req.userInfo;
 
@@ -116,10 +124,14 @@ module.exports = {
       });
     }
 
-    const newTask = await Task.updateOne(
+    await Task.updateOne(
       { _id: taskId },
       { finished: true, finishedAt: new Date() }
     );
-    return res.json(newTask);
+    const newTask = await Task.findById(taskId);
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "Task checked successfully", newTask });
   },
 };

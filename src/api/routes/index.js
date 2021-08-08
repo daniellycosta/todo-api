@@ -12,7 +12,6 @@ routes.post("/api/login", UserController.login);
 routes.get("/api/projects", verifyJWT, ProjectController.find);
 routes.post("/api/projects", verifyJWT, ProjectController.create);
 
-//routes.get("/projects/:id", verifyJWT, ProjectController.findOne); //TODO:não é necessário
 routes.delete("/api/projects/:id", verifyJWT, ProjectController.delete);
 routes.patch("/api/projects/:id", verifyJWT, ProjectController.update);
 
@@ -31,9 +30,9 @@ routes.patch(
 );
 
 routes.post(
-  "/api/projects/:id/tasks/:taskId/check",
+  "/api/projects/:id/tasks/:taskId/finish",
   verifyJWT,
-  TaskController.checkItem
+  TaskController.finishItem
 );
 
 module.exports = routes;
