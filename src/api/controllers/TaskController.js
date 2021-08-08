@@ -97,6 +97,15 @@ module.exports = {
       });
     }
 
+    const task = await Task.findById(taskId);
+
+    if (task.finished) {
+      return res.status(401).json({
+        status: 401,
+        message: `User can not edit a finished task`,
+      });
+    }
+
     await Task.updateOne({ _id: taskId }, req.body);
     const newTask = await Task.findById(taskId);
 

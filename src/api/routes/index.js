@@ -12,6 +12,7 @@ routes.post("/api/login", UserController.login);
 routes.get("/api/projects", verifyJWT, ProjectController.find);
 routes.post("/api/projects", verifyJWT, ProjectController.create);
 
+routes.get("/api/projects/:id", verifyJWT, ProjectController.findOne);
 routes.delete("/api/projects/:id", verifyJWT, ProjectController.delete);
 routes.patch("/api/projects/:id", verifyJWT, ProjectController.update);
 
