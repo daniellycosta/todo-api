@@ -46,7 +46,11 @@ module.exports = {
       });
     }
 
-    const task = await Task.create({ name, projectId: projectId });
+    const task = await Task.create({
+      name,
+      projectId: projectId,
+      createdAt: new Date(),
+    });
 
     return res
       .status(201)
