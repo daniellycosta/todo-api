@@ -31,10 +31,11 @@ Once you've cloned the project, you should run the command down below to install
 yarn install
 ```
 
-After installing the dependencies, run the command below to start the application
+After installing the dependencies, run one of the commands below to start the application
 
-```
-yarn start
+```js
+yarn dev //to start development server using nodemon
+yarn start //to start production server
 ```
 
 ## [Technologies used](#technologies)
